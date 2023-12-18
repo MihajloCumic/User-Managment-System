@@ -19,13 +19,11 @@ import java.util.stream.Collectors;
 @Service
 public class UserAuthService implements AuthService<LoginDto, AuthResponseDto> {
     private final AuthenticationManager authenticationManager;
-    private final UserService userService;
     private final JwtUtil jwtUtil;
 
     @Autowired
-    public UserAuthService(AuthenticationManager authenticationManager, UserService userService, JwtUtil jwtUtil) {
+    public UserAuthService(AuthenticationManager authenticationManager, JwtUtil jwtUtil) {
         this.authenticationManager = authenticationManager;
-        this.userService = userService;
         this.jwtUtil = jwtUtil;
     }
 
