@@ -1,6 +1,7 @@
 package com.raf.usermanagmentsystem.controllers;
 
 import com.raf.usermanagmentsystem.dto.UserCreateDto;
+import com.raf.usermanagmentsystem.dto.UserUpdateDto;
 import com.raf.usermanagmentsystem.model.User;
 import com.raf.usermanagmentsystem.services.UserManagmentService;
 import jakarta.validation.Valid;
@@ -32,18 +33,12 @@ public class UserController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> createUser(@Valid @RequestBody UserCreateDto userCreateDto){
-//        try{
-//            return ResponseEntity.ok(this.userManagmentService.createUser(userCreateDto));
-//        }catch (Exception e){
-//            System.out.println(e.getMessage());
-//            return ResponseEntity.status(500).build();
-//        }
         return ResponseEntity.ok(this.userManagmentService.createUser(userCreateDto));
     }
 
-    @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> updateUser(){
-        return ResponseEntity.ok("Update user");
+    @PatchMapping (produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> updateUser(@Valid @RequestBody UserUpdateDto userUpdateDto){
+        return ResponseEntity.ok(this.userManagmentService.updateUser(userUpdateDto));
     }
 
     @DeleteMapping (produces = MediaType.APPLICATION_JSON_VALUE)

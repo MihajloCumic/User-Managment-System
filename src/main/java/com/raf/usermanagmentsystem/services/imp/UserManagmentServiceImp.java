@@ -1,6 +1,7 @@
 package com.raf.usermanagmentsystem.services.imp;
 
 import com.raf.usermanagmentsystem.dto.UserCreateDto;
+import com.raf.usermanagmentsystem.dto.UserUpdateDto;
 import com.raf.usermanagmentsystem.exceptions.PrivilegeNotFoundException;
 import com.raf.usermanagmentsystem.model.Privilege;
 import com.raf.usermanagmentsystem.model.User;
@@ -8,6 +9,7 @@ import com.raf.usermanagmentsystem.repository.PrivilegeRepository;
 import com.raf.usermanagmentsystem.repository.UserRepository;
 import com.raf.usermanagmentsystem.services.UserManagmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -43,16 +45,29 @@ public class UserManagmentServiceImp implements UserManagmentService {
         user.setPassword(this.passwordEncoder.encode(userCreateDto.getPassword()));
 
         if (userCreateDto.getPrivileges() != null && !userCreateDto.getPrivileges().isEmpty()){
-            Set<Privilege> privileges = new HashSet<>();
-            for(String privilegeName: userCreateDto.getPrivileges()){
-                Optional<Privilege> privilegeOptional = this.privilegeRepository.findByName(privilegeName);
-//                if(privilegeOptional.isPresent()){
-//                    privileges.add(privilegeOptional.get());
-//                }
-                Privilege privilege = privilegeOptional.orElseThrow(() -> new PrivilegeNotFoundException());
-                privileges.add(privilege);
-            }
+            Set<Privilege> privileges = this.mapPrivileges(userCreateDto.getPrivileges());
             user.setPrivileges(privileges);
+        }
+        return this.userRepository.save(user);
+    }
+
+    @Override
+    public User updateUser(UserUpdateDto userUpdateDto) {
+        User user = this.userRepository.findById(userUpdateDto.getId()).orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
+        if (userUpdateDto.getFirstName() != null){
+            user.setFirstName(userUpdateDto.getFirstName());
+        }
+        if(userUpdateDto.getLastName() != null){
+            user.setLastName(userUpdateDto.getLastName());
+        }
+        if(userUpdateDto.getEmail() != null){
+            user.setEmail(userUpdateDto.getEmail());
+        }
+        if(userUpdateDto.getPassword() != null){
+            user.setPassword(this.passwordEncoder.encode(userUpdateDto.getPassword()));
+        }
+        if(userUpdateDto.getPrivileges() != null){
+            user.setPrivileges(this.mapPrivileges(userUpdateDto.getPrivileges()));
         }
         return this.userRepository.save(user);
     }
@@ -60,5 +75,15 @@ public class UserManagmentServiceImp implements UserManagmentService {
     @Override
     public void deleteUser(Long userId) {
         this.userRepository.deleteById(userId);
+    }
+
+    private Set<Privilege> mapPrivileges(Set<String> privilegeNames){
+        Set<Privilege> privileges = new HashSet<>();
+        for(String privilegeName: privilegeNames){
+            Optional<Privilege> privilegeOptional = this.privilegeRepository.findByName(privilegeName);
+            Privilege privilege = privilegeOptional.orElseThrow(() -> new PrivilegeNotFoundException());
+            privileges.add(privilege);
+        }
+        return privileges;
     }
 }
