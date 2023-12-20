@@ -5,6 +5,7 @@ import com.raf.usermanagmentsystem.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -37,7 +38,10 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/auth/**").permitAll()
-
+                        .requestMatchers(HttpMethod.GET,"/users/**").hasAuthority("can_read_users")
+                        .requestMatchers(HttpMethod.POST, "/users").hasAuthority("can_create_users")
+                        .requestMatchers(HttpMethod.PATCH, "/users/**").hasAuthority("can_update_users")
+                        .requestMatchers(HttpMethod.DELETE, "/users/**").hasAuthority("can_delete_users")
                         .anyRequest().authenticated())
                 .httpBasic(Customizer.withDefaults());
         http.addFilterBefore(this.jwtFilter, UsernamePasswordAuthenticationFilter.class);

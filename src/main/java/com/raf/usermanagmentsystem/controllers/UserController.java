@@ -21,6 +21,11 @@ public class UserController {
         this.userManagmentService = userManagmentService;
     }
 
+    @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> getUserById(@PathVariable Long id){
+        return ResponseEntity.ok(this.userManagmentService.getUserById(id));
+    }
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<User>> getAllUsers(){
         try{

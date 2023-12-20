@@ -45,7 +45,7 @@ public class DataLoader implements CommandLineRunner {
         User user3 = createUser("mihajlo@gmail.com", "Mihajlo", "Mihajlovic", "123");
 
         //Adding privileges to users
-        addPrivilegesToUser(Arrays.asList(canReadUsers), user1);
+        //addPrivilegesToUser(Arrays.asList(canReadUsers), user1);
         addPrivilegesToUser(Arrays.asList(canReadUsers, canCreateUsers, canUpdateUsers), user2);
         addPrivilegesToUser(Arrays.asList(canReadUsers, canCreateUsers, canUpdateUsers, canDeleteUsers), user3);
 

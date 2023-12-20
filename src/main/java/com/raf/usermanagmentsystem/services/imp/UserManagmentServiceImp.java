@@ -17,7 +17,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 @Service
 public class UserManagmentServiceImp implements UserManagmentService {
@@ -31,6 +30,13 @@ public class UserManagmentServiceImp implements UserManagmentService {
         this.passwordEncoder = passwordEncoder;
         this.privilegeRepository = privilegeRepository;
     }
+
+    @Override
+    public User getUserById(Long id) {
+        User user = this.userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User does not exists"));
+        return user;
+    }
+
     @Override
     public List<User> getUsers() {
         return this.userRepository.findAll();

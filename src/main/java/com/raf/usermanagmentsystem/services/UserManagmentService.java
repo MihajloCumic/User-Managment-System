@@ -7,6 +7,7 @@ import com.raf.usermanagmentsystem.model.User;
 import java.util.List;
 
 public interface UserManagmentService {
+    User getUserById(Long id);
     List<User> getUsers();
     User createUser(UserCreateDto userCreateDto);
     User updateUser(UserUpdateDto userUpdateDto, Long id);
