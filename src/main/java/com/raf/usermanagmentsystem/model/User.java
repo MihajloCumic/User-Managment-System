@@ -31,7 +31,6 @@ public class User {
     @Column
     @JsonIgnore
     @NotBlank(message = "Password must be provided.")
-    @Min(value = 4, message = "Password must be at least 4 characters.")
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)

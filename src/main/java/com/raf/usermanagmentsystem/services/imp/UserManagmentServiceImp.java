@@ -9,6 +9,7 @@ import com.raf.usermanagmentsystem.repository.PrivilegeRepository;
 import com.raf.usermanagmentsystem.repository.UserRepository;
 import com.raf.usermanagmentsystem.services.UserManagmentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -40,6 +41,11 @@ public class UserManagmentServiceImp implements UserManagmentService {
     @Override
     public List<User> getUsers() {
         return this.userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getUsers(Pageable pageable) {
+        return this.userRepository.findAll(pageable).getContent();
     }
 
     @Override

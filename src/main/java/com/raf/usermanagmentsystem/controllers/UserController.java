@@ -5,6 +5,7 @@ import com.raf.usermanagmentsystem.dto.UserUpdateDto;
 import com.raf.usermanagmentsystem.model.User;
 import com.raf.usermanagmentsystem.services.UserManagmentService;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,9 +28,13 @@ public class UserController {
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<List<User>> getAllUsers(){
+    public ResponseEntity<List<User>> getAllUsers(
+            @RequestParam(value = "pageNumber",required = false) Integer pageNumber,
+            @RequestParam(value = "pageSize",required = false) Integer pageSize
+    ){
         try{
-            return ResponseEntity.ok(this.userManagmentService.getUsers());
+            if(pageNumber == null || pageSize == null) return ResponseEntity.ok(this.userManagmentService.getUsers());
+            return ResponseEntity.ok(this.userManagmentService.getUsers(PageRequest.of(pageNumber, pageSize)));
         }catch (Exception e){
             return ResponseEntity.status(500).build();
         }

@@ -39,9 +39,9 @@ public class DataLoader implements CommandLineRunner {
         Privilege canDeleteUsers = createPrivilege("can_delete_users");
 
         //Users
-        User user1 = createUser("aleksa@gmail.com", "Aleksa", "Aleksic", "123");
-        User user2 = createUser("marko@gmail.com", "Marko", "Markovic", "123");
-        User user3 = createUser("mihajlo@gmail.com", "Mihajlo", "Mihajlovic", "123");
+        User user1 = createUser("aleksa@gmail.com", "Aleksa", "Aleksic", "12345");
+        User user2 = createUser("marko@gmail.com", "Marko", "Markovic", "12345");
+        User user3 = createUser("mihajlo@gmail.com", "Mihajlo", "Mihajlovic", "12345");
 
         //Adding privileges to users
         addPrivilegesToUser(Arrays.asList(canReadUsers), user1);
