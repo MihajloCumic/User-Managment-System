@@ -27,7 +27,12 @@ public class UserManagmentServiceImp implements UserManagmentService {
 
     @Override
     public User createUser(UserCreateDto userCreateDto) {
-        return null;
+        User user = new User();
+        user.setFirstName(userCreateDto.getFirstName());
+        user.setLastName(userCreateDto.getLastName());
+        user.setEmail(userCreateDto.getEmail());
+        user.setPassword(this.passwordEncoder.encode(userCreateDto.getPassword()));
+        return this.userRepository.save(user);
     }
 
     @Override

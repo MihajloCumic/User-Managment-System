@@ -1,7 +1,9 @@
 package com.raf.usermanagmentsystem.controllers;
 
+import com.raf.usermanagmentsystem.dto.UserCreateDto;
 import com.raf.usermanagmentsystem.model.User;
 import com.raf.usermanagmentsystem.services.UserManagmentService;
+import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +23,6 @@ public class UserController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<User>> getAllUsers(){
         try{
-            System.out.println("Get mappign");
             return ResponseEntity.ok(this.userManagmentService.getUsers());
         }catch (Exception e){
             return ResponseEntity.status(500).build();
@@ -30,8 +31,12 @@ public class UserController {
     }
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> createUser(){
-        return ResponseEntity.ok("Create user");
+    public ResponseEntity<User> createUser(@Valid @RequestBody UserCreateDto userCreateDto){
+        try{
+            return ResponseEntity.ok(this.userManagmentService.createUser(userCreateDto));
+        }catch (Exception e){
+            return ResponseEntity.status(500).build();
+        }
     }
 
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)

@@ -1,5 +1,6 @@
 package com.raf.usermanagmentsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -14,6 +15,7 @@ import java.util.Set;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private Long id;
     @Column
     private String firstName;
@@ -22,6 +24,7 @@ public class User {
     @Column(unique = true)
     private String email;
     @Column
+    @JsonIgnore
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
