@@ -8,16 +8,15 @@ import com.raf.usermanagmentsystem.model.User;
 import com.raf.usermanagmentsystem.repository.PrivilegeRepository;
 import com.raf.usermanagmentsystem.repository.UserRepository;
 import com.raf.usermanagmentsystem.services.UserManagmentService;
+import jakarta.transaction.TransactionalException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionSystemException;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserManagmentServiceImp implements UserManagmentService {

@@ -4,6 +4,7 @@ import com.raf.usermanagmentsystem.dto.UserCreateDto;
 import com.raf.usermanagmentsystem.dto.UserUpdateDto;
 import com.raf.usermanagmentsystem.model.User;
 import com.raf.usermanagmentsystem.services.UserManagmentService;
+import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
@@ -43,12 +44,12 @@ public class UserController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> createUser(@Valid @RequestBody UserCreateDto userCreateDto){
-        return ResponseEntity.ok(this.userManagmentService.createUser(userCreateDto));
+            return ResponseEntity.ok(this.userManagmentService.createUser(userCreateDto));
     }
 
     @PatchMapping (value = "{id}",produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> updateUser(@Valid @RequestBody UserUpdateDto userUpdateDto, @PathVariable Long id){
-        return ResponseEntity.ok(this.userManagmentService.updateUser(userUpdateDto, id));
+            return ResponseEntity.ok(this.userManagmentService.updateUser(userUpdateDto, id));
     }
 
     @DeleteMapping (value = "{id}",produces = MediaType.APPLICATION_JSON_VALUE)

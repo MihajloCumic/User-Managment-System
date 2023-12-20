@@ -1,6 +1,7 @@
 package com.raf.usermanagmentsystem.exceptions;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.TransactionSystemException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,6 +22,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(getErrorsMap(errors));
 
     }
+
+    @ExceptionHandler(TransactionSystemException.class)
+    public ResponseEntity<Map<String, List<String>>> handleJpaExceptions(TransactionSystemException exception){
+        return ResponseEntity.badRequest().body(getErrorsMap(Arrays.asList(exception.getMessage())));
+
+    }
+
+
 
     @ExceptionHandler(PrivilegeNotFoundException.class)
     public ResponseEntity<Map<String, List<String>>> handlePrivilegeError(PrivilegeNotFoundException exception){
