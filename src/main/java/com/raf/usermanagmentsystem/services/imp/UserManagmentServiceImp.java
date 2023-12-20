@@ -52,8 +52,8 @@ public class UserManagmentServiceImp implements UserManagmentService {
     }
 
     @Override
-    public User updateUser(UserUpdateDto userUpdateDto) {
-        User user = this.userRepository.findById(userUpdateDto.getId()).orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
+    public User updateUser(UserUpdateDto userUpdateDto, Long id) {
+        User user = this.userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
         if (userUpdateDto.getFirstName() != null){
             user.setFirstName(userUpdateDto.getFirstName());
         }
@@ -73,8 +73,12 @@ public class UserManagmentServiceImp implements UserManagmentService {
     }
 
     @Override
-    public void deleteUser(Long userId) {
+    public User deleteUser(Long userId) {
+        User user = this.userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
+        user.getPrivileges().clear();
         this.userRepository.deleteById(userId);
+        return user;
+
     }
 
     private Set<Privilege> mapPrivileges(Set<String> privilegeNames){

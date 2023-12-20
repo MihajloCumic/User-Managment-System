@@ -36,14 +36,14 @@ public class UserController {
         return ResponseEntity.ok(this.userManagmentService.createUser(userCreateDto));
     }
 
-    @PatchMapping (produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> updateUser(@Valid @RequestBody UserUpdateDto userUpdateDto){
-        return ResponseEntity.ok(this.userManagmentService.updateUser(userUpdateDto));
+    @PatchMapping (value = "{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> updateUser(@Valid @RequestBody UserUpdateDto userUpdateDto, @PathVariable Long id){
+        return ResponseEntity.ok(this.userManagmentService.updateUser(userUpdateDto, id));
     }
 
-    @DeleteMapping (produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteUser(){
-        return ResponseEntity.ok("Delete user");
+    @DeleteMapping (value = "{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> deleteUser(@PathVariable Long id){
+        return ResponseEntity.ok(this.userManagmentService.deleteUser(id));
     }
 
 
