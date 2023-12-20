@@ -6,6 +6,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,8 +20,14 @@ public class GlobalExceptionHandler {
                 .stream().map(FieldError::getDefaultMessage).collect(Collectors.toList());
         return ResponseEntity.badRequest().body(getErrorsMap(errors));
 
-
     }
+
+    @ExceptionHandler(PrivilegeNotFoundException.class)
+    public ResponseEntity<Map<String, List<String>>> handlePrivilegeError(PrivilegeNotFoundException exception){
+        System.out.println("Privilege from aspect.");
+        return ResponseEntity.badRequest().body(getErrorsMap(Arrays.asList(exception.getMessage())));
+    }
+
 
     private Map<String, List<String>> getErrorsMap(List<String> errors){
         Map<String, List<String>> errorResponse = new HashMap<>();

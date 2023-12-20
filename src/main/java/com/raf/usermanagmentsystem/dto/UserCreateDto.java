@@ -4,6 +4,8 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 public class UserCreateDto {
 
@@ -16,4 +18,6 @@ public class UserCreateDto {
     private String email;
     @NotBlank
     private String password;
+
+    private Set<String> privileges;
 }

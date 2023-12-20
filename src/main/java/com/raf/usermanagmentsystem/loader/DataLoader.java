@@ -32,6 +32,7 @@ public class DataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         System.out.println("Loading data...");
+
         //Privileges
         Privilege canReadUsers = createPrivilege("can_read_users");
         Privilege canCreateUsers = createPrivilege("can_create_users");

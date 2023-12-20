@@ -32,11 +32,13 @@ public class UserController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> createUser(@Valid @RequestBody UserCreateDto userCreateDto){
-        try{
-            return ResponseEntity.ok(this.userManagmentService.createUser(userCreateDto));
-        }catch (Exception e){
-            return ResponseEntity.status(500).build();
-        }
+//        try{
+//            return ResponseEntity.ok(this.userManagmentService.createUser(userCreateDto));
+//        }catch (Exception e){
+//            System.out.println(e.getMessage());
+//            return ResponseEntity.status(500).build();
+//        }
+        return ResponseEntity.ok(this.userManagmentService.createUser(userCreateDto));
     }
 
     @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
