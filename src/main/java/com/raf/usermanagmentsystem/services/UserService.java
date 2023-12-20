@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,7 +32,7 @@ public class UserService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), mapPrivilegesToAuthorities(user.getPrivileges()));
     }
 
-    private Collection<GrantedAuthority> mapPrivilegesToAuthorities(List<Privilege> privileges){
-        return privileges.stream().map(privilege -> new SimpleGrantedAuthority(privilege.getName())).collect(Collectors.toList());
+    private Collection<GrantedAuthority> mapPrivilegesToAuthorities(Set<Privilege> privileges){
+        return privileges.stream().map(privilege -> new SimpleGrantedAuthority(privilege.getName())).collect(Collectors.toSet());
     }
 }

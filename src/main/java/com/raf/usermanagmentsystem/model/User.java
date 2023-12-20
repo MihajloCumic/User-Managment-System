@@ -3,8 +3,10 @@ package com.raf.usermanagmentsystem.model;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.HashSet;
+
+import java.util.Set;
 
 @Data
 @Entity
@@ -25,5 +27,5 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     @JoinTable(name = "user_privileges", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
-    private List<Privilege> privileges = new ArrayList<>();
+    private Set<Privilege> privileges = new HashSet<>();
 }
