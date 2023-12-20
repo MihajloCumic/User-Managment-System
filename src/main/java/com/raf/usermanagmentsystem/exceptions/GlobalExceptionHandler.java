@@ -24,7 +24,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(PrivilegeNotFoundException.class)
     public ResponseEntity<Map<String, List<String>>> handlePrivilegeError(PrivilegeNotFoundException exception){
-        System.out.println("Privilege from aspect.");
         return ResponseEntity.badRequest().body(getErrorsMap(Arrays.asList(exception.getMessage())));
     }
 

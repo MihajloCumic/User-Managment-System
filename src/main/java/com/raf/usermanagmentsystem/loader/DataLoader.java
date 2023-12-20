@@ -9,9 +9,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
+
 import java.util.List;
 
 @Component
@@ -45,13 +44,10 @@ public class DataLoader implements CommandLineRunner {
         User user3 = createUser("mihajlo@gmail.com", "Mihajlo", "Mihajlovic", "123");
 
         //Adding privileges to users
-        //addPrivilegesToUser(Arrays.asList(canReadUsers), user1);
+        addPrivilegesToUser(Arrays.asList(canReadUsers), user1);
         addPrivilegesToUser(Arrays.asList(canReadUsers, canCreateUsers, canUpdateUsers), user2);
         addPrivilegesToUser(Arrays.asList(canReadUsers, canCreateUsers, canUpdateUsers, canDeleteUsers), user3);
 
-//Resenje za brisanje privilegije iz privilegija korisnika
-//        user1.setPrivileges(new HashSet<>());
-//        userRepository.save(user1);
 
 
         System.out.println("Finished loading data.");

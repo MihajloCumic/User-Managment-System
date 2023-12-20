@@ -9,14 +9,13 @@ import java.util.Set;
 @Data
 public class UserCreateDto {
 
-    @NotBlank
+    @NotBlank(message = "First name must be provided.")
     private String firstName;
-    @NotBlank
+    @NotBlank(message = "Last name must be provided.")
     private String lastName;
-    @NotBlank
-    @Email
+    @Email(message = "Incorrect form of an email.")
     private String email;
-    @NotBlank
+    @NotBlank(message = "Password must be provided.")
     private String password;
 
     private Set<String> privileges;
