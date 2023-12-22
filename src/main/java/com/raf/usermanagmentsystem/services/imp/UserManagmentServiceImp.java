@@ -38,6 +38,12 @@ public class UserManagmentServiceImp implements UserManagmentService {
     }
 
     @Override
+    public User getUserByEmail(String email) {
+        User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User does not exists"));
+        return user;
+    }
+
+    @Override
     public List<User> getUsers() {
         return this.userRepository.findAll();
     }
@@ -63,8 +69,8 @@ public class UserManagmentServiceImp implements UserManagmentService {
     }
 
     @Override
-    public User updateUser(UserUpdateDto userUpdateDto, Long id) {
-        User user = this.userRepository.findById(id).orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
+    public User updateUser(UserUpdateDto userUpdateDto, String email) {
+        User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
         if (userUpdateDto.getFirstName() != null){
             user.setFirstName(userUpdateDto.getFirstName());
         }
@@ -84,10 +90,10 @@ public class UserManagmentServiceImp implements UserManagmentService {
     }
 
     @Override
-    public User deleteUser(Long userId) {
-        User user = this.userRepository.findById(userId).orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
+    public User deleteUser(String email) {
+        User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("User does not exist"));
         user.getPrivileges().clear();
-        this.userRepository.deleteById(userId);
+        this.userRepository.delete(user);
         return user;
 
     }

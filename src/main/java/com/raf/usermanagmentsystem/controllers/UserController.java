@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/users")
+@CrossOrigin
 public class UserController {
 
     private final UserManagmentService userManagmentService;
@@ -26,6 +27,11 @@ public class UserController {
     @GetMapping(value = "{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> getUserById(@PathVariable Long id){
         return ResponseEntity.ok(this.userManagmentService.getUserById(id));
+    }
+
+    @GetMapping(value = "email",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> getUserByEmail(@RequestParam(value = "email",required = true)String email){
+        return ResponseEntity.ok(this.userManagmentService.getUserByEmail(email));
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
@@ -47,14 +53,14 @@ public class UserController {
             return ResponseEntity.ok(this.userManagmentService.createUser(userCreateDto));
     }
 
-    @PatchMapping (value = "{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<User> updateUser(@Valid @RequestBody UserUpdateDto userUpdateDto, @PathVariable Long id){
-            return ResponseEntity.ok(this.userManagmentService.updateUser(userUpdateDto, id));
+    @PatchMapping (produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<User> updateUser(@Valid @RequestBody UserUpdateDto userUpdateDto, @RequestParam(value = "email",required = true) String email){
+            return ResponseEntity.ok(this.userManagmentService.updateUser(userUpdateDto, email));
     }
 
-    @DeleteMapping (value = "{id}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> deleteUser(@PathVariable Long id){
-        return ResponseEntity.ok(this.userManagmentService.deleteUser(id));
+    @DeleteMapping (produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> deleteUser(@RequestParam(value = "email",required = true) String email){
+        return ResponseEntity.ok(this.userManagmentService.deleteUser(email));
     }
 
 

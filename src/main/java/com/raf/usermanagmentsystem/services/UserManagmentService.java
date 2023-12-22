@@ -9,11 +9,12 @@ import java.util.List;
 
 public interface UserManagmentService {
     User getUserById(Long id);
+    User getUserByEmail(String email);
     List<User> getUsers();
     List<User> getUsers(Pageable pageable);
     User createUser(UserCreateDto userCreateDto);
-    User updateUser(UserUpdateDto userUpdateDto, Long id);
+    User updateUser(UserUpdateDto userUpdateDto, String email);
 
-    User deleteUser(Long userId);
+    User deleteUser(String email);
 
 }
